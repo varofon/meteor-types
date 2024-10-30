@@ -4,7 +4,11 @@ const fs = require('fs');
 const path = require('path');
 const log = require('./log.js');
 
-const shouldOverrideSymlinkTarget = process.env.SYMLINK_REMOTE_CATALOG_ROOT && process.env.SYMLINK_APP_PATH;
+const shouldOverrideSymlinkTarget = process.env.ZODERN_TYPES_SYMLINK_REMOTE_CATALOG_ROOT && process.env.ZODERN_TYPES_SYMLINK_APP_PATH;
+const symlinkOverrides = {
+	remoteCatalogRoot: process.env.ZODERN_TYPES_SYMLINK_REMOTE_CATALOG_ROOT,
+	appPath: process.env.ZODERN_TYPES_SYMLINK_APP_PATH
+}
 
 // Manages the files and folders in .meteor/local/types
 module.exports = class Writer {
@@ -91,7 +95,7 @@ module.exports = class Writer {
 		// symlink target path
 		const isRemote = path.includes(this.remoteCatalogRoot);
 		const pathToReplace	= isRemote ? this.remoteCatalogRoot : this.appPath;
-		const reaplacementPath = isRemote ? process.env.SYMLINK_REMOTE_CATALOG_ROOT : process.env.SYMLINK_APP_PATH;
+		const reaplacementPath = isRemote ? symlinkOverrides.remoteCatalogRoot : symlinkOverrides.appPath;
 
 		return path.replace(pathToReplace, reaplacementPath);
 	}
