@@ -6,6 +6,7 @@ const ProjectContext = require('./tools-imports.js').ProjectContext;
 const tropohouse = require('./tools-imports.js').tropohouse;
 const path = require('path');
 const fs = require('fs');
+const log = require('./log.js');
 
 var appPath = process.cwd();
 var writer = new Writer(appPath);
@@ -73,6 +74,11 @@ class Linter {
       writer.setup();
       setupFinished = true;
     }
+
+		log('paths',{
+			appPath,
+			remoteCatalogRoot
+		})
 
     var packages = loadPackages(appPath, catalog, remoteCatalogRoot);
 
